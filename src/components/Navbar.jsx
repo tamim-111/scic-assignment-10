@@ -93,11 +93,11 @@ const Navbar = () => {
                     )}
                     <li>
                         {!session ? (
-                            <button onClick={() => signIn()} className="hover:text-primary text-left">
+                            <button onClick={() => signIn()} className="hover:text-primary cursor-pointer text-left">
                                 SignIn
                             </button>
                         ) : (
-                            <button onClick={() => signOut()} className="hover:text-primary text-left">
+                            <button onClick={() => signOut()} className="hover:text-primary cursor-pointer text-left">
                                 SignOut
                             </button>
                         )}
