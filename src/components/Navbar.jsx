@@ -30,8 +30,8 @@ const Navbar = () => {
     const navItems = [
         { href: "/", label: "Home" },
         { href: "/about", label: "About" },
-        { href: "/AvailableCars", label: "Available Cars" },
-        { href: "/AddCar", label: "Add Car", private: true },
+        { href: "/availableCars", label: "available Cars" },
+        { href: "/addCar", label: "add Car", private: true },
     ];
 
     return (
