@@ -2,8 +2,23 @@
 
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const AddCar = () => {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/auth/signin"); // redirect if not signed in
+        }
+    }, [status, router]);
+
+    if (!session) return <p className="text-center mt-40">Redirecting to Sign In...</p>;
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();

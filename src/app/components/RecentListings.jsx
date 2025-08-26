@@ -16,10 +16,20 @@ const RecentListings = () => {
         fetch("/api/cars")
             .then((res) => res.json())
             .then((data) => {
-                setCars(data);
+                // Ensure data is an array
+                if (Array.isArray(data)) {
+                    setCars(data);
+                } else {
+                    setCars([]); // fallback
+                    console.error("API returned non-array data:", data);
+                }
                 setLoading(false);
             })
-            .catch(() => setLoading(false));
+            .catch((err) => {
+                console.error("Failed to fetch cars:", err);
+                setCars([]);
+                setLoading(false);
+            });
     }, []);
 
     if (loading) return <LoadingSpinner />;
@@ -32,7 +42,7 @@ const RecentListings = () => {
         setVisibleCount((prev) => prev + 8);
     };
 
-    const visibleCars = cars.slice(0, visibleCount);
+    const visibleCars = Array.isArray(cars) ? cars.slice(0, visibleCount) : [];
 
     return (
         <Fade>
@@ -40,20 +50,13 @@ const RecentListings = () => {
                 <h1 className="text-center text-4xl font-bold mb-10">Recent Listings</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-20">
                     {visibleCars.map((car) => (
-                        <RecentListingsCard
-                            car={car}
-                            getTimeAgo={getTimeAgo}
-                            key={car._id}
-                        />
+                        <RecentListingsCard car={car} getTimeAgo={getTimeAgo} key={car._id} />
                     ))}
                 </div>
 
                 {visibleCount < cars.length && (
                     <div className="text-center mt-10">
-                        <button
-                            onClick={loadMore}
-                            className="btn btn-primary btn-md"
-                        >
+                        <button onClick={loadMore} className="btn btn-primary btn-md">
                             Load More
                         </button>
                     </div>
