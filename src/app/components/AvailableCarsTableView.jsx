@@ -1,13 +1,9 @@
-"use client"
-
-import Link from 'next/link';
-import React from 'react';
+import React from "react";
+import Link from "next/link";
 
 const AvailableCarsTableView = ({ car }) => {
     return (
-        <tr
-            className="border border-gray-200"
-        >
+        <tr className="border border-gray-200">
             <td className="p-2">
                 <img
                     src={car.imageUrl}
@@ -17,10 +13,10 @@ const AvailableCarsTableView = ({ car }) => {
             </td>
             <td className="p-2 font-semibold">{car.carModel}</td>
             <td className="p-2 truncate max-w-xs">
-                {car.description ? car.description.substring(0, 60) + '...' : 'No description'}
+                {car.description ? car.description.substring(0, 60) + "..." : "No description"}
             </td>
             <td className="p-2">
-                <Link href={`/carDetails/${car._id}`} className="btn btn-sm btn-primary">
+                <Link href={`/car-details/${car._id}`} className="btn btn-sm btn-primary">
                     Book Now
                 </Link>
             </td>

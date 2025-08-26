@@ -9,10 +9,14 @@ export async function GET() {
     try {
         await client.connect();
         const db = client.db(dbName);
+
         const cars = await db.collection("cars").find().sort({ postedDate: -1 }).toArray();
         return new Response(JSON.stringify(cars), { status: 200 });
     } catch (error) {
+        console.error(error);
         return new Response(JSON.stringify({ error: "Failed to fetch cars" }), { status: 500 });
+    } finally {
+        await client.close();
     }
 }
 
@@ -21,9 +25,13 @@ export async function POST(req) {
         const carData = await req.json();
         await client.connect();
         const db = client.db(dbName);
+
         const result = await db.collection("cars").insertOne(carData);
         return new Response(JSON.stringify(result), { status: 201 });
     } catch (error) {
+        console.error(error);
         return new Response(JSON.stringify({ error: "Failed to add car" }), { status: 500 });
+    } finally {
+        await client.close();
     }
 }
